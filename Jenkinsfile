@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools { 
         maven 'Maven 3.6.0' 
-        jdk 'jdk8' 
+        jdk 'java-1.8.0-openjdk-amd64' 
     }
     stages {
         stage ('Initialize Maven') {
@@ -15,8 +15,9 @@ pipeline {
         }
 
         stage ('Build') {
-            steps {
-                echo 'This is a minimal pipeline.'
+            environment  {
+                MVN_COMMAND = "mvn clean package"
+                TEST_REPORTS = "target/surefire-reports/*.xml"
             }
         }
     }
