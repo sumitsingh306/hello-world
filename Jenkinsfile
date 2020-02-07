@@ -15,9 +15,8 @@ pipeline {
         }
 
         stage ('Build') {
-            environment  {
-                MVN_COMMAND = "mvn clean package"
-                TEST_REPORTS = "target/surefire-reports/*.xml"
+            steps {
+                echo 'This is a minimal pipeline.'
             }
         }
     }
