@@ -20,10 +20,17 @@ pipeline {
                }
             }
         }
-        stage ('Build Stage') {
+        stage ('Packaging Stage') {
             steps {
                withMaven(maven : 'Maven 3.6.0') {
-                   sh 'mvn clean build'
+                   sh 'mvn clean package'
+               }
+            }
+        }
+        stage ('Install Stage') {
+            steps {
+               withMaven(maven : 'Maven 3.6.0') {
+                   sh 'mvn clean install'
                }
             }
         }
@@ -33,6 +40,6 @@ pipeline {
                    sh 'mvn clean deploy'
                }
             }
-        }
+        }   
     }
-}
+}   
