@@ -1,22 +1,37 @@
 pipeline {
+   /* stanza for simple maven pipeline */
     agent any
     tools { 
         maven 'Maven 3.6.0' 
         jdk 'jdk8' 
     }
     stages {
-        stage ('Initialize Maven') {
+        stage ('Compile Stage') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                ''' 
+                withMaven(maven : 'maven Maven 3.6.0') {
+                    sh 'mvn clean compile'
+                }
             }
         }
-
-        stage ('Build') {
+        stage ('Testing Stage') {
             steps {
-                echo 'This is a minimal pipeline.'
+               withMaven(maven : 'maven Maven 3.6.0') {
+                   sh 'mvn clean test'
+               }
+            }
+        }
+        stage ('Build Stage') {
+            steps {
+               withMaven(maven : 'maven Maven 3.6.0') {
+                   sh 'mvn clean build'
+               }
+            }
+        }
+        stage ('Deploy Stage') {
+            steps {
+               withMaven(maven : 'maven Maven 3.6.0') {
+                   sh 'mvn clean deploy'
+               }
             }
         }
     }
