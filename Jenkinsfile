@@ -34,12 +34,12 @@ pipeline {
                }
             }
         }
-       stage('build && SonarQube analysis') {
+       stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv(credentialsId: 'f71ac12495ecf040a84f93f53216b27a91e69903', installationName: 'My SonarQube Server') {
                     // Optionally use a Maven environment you've configured already
                     withMaven(maven:'Maven 3.6.0') {
-                        sh 'mvn clean package sonar:sonar'
+                        sh 'mvn clean verify sonar:sonar'
                     }
                 }
             }
